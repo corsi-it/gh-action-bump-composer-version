@@ -227,7 +227,7 @@ function getComposerJson() {
 function writeVersionToFile(version, pkg, path) {
   const pathToComposer = path.join(workspace, 'composer.json');
   pkg.version = version;
-  writeFileSync(pathToComposer, JSON.stringify(pkg));
+  writeFileSync(pathToComposer, JSON.stringify(pkg, null, '\t'));
 }
 
 function exitSuccess(message) {
