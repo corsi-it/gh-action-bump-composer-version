@@ -4,6 +4,8 @@ const { existsSync, writeFileSync } = require('fs');
 const { EOL } = require('os');
 const path = require('path');
 
+require('dotenv').config()
+
 // Change working directory if user defined COMPOSERJSON_DIR
 if (process.env.COMPOSERJSON_DIR) {
   process.env.GITHUB_WORKSPACE = `${process.env.GITHUB_WORKSPACE}/${process.env.COMPOSERJSON_DIR}`;
@@ -147,6 +149,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`,
     ]);
 
+    console.log(process.env.GITHUB_REF)
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     let isPullRequest = false;
     if (process.env.GITHUB_HEAD_REF) {
