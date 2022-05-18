@@ -193,6 +193,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
         await runInWorkspace('git', ['commit', '-a', '-m', commitMessage.replace(/{{version}}/g, newVersion)]);
       }
     } catch (e) {
+      console.log(e);
       console.warn(
         'git commit failed because you are using "actions/checkout@v2"; ' +
           'but that doesnt matter because you dont need that git commit, thats only for "actions/checkout@v1"',
