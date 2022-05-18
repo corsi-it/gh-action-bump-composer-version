@@ -1,0 +1,32 @@
+name: 'Bump Version'
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  bump-version:
+    name: 'Bump Version on master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      - name: 'cat composer.json'
+        run: cat ./composer.json
+      - name: 'Automated Version Bump'
+        id: version-bump
+        uses: 'corsi/gh-action-bump-composer-version@master'
+        with:
+          tag-prefix: 'v'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'cat composer.json'
+        run: cat ./composer.json
+      - name: 'Output Step'
+        env:
+          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+        run: echo "new tag $NEW_TAG"

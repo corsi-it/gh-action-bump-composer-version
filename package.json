@@ -1,0 +1,31 @@
+
+{
+  "name": "gh-action-bump-composer-version",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corsi-it/gh-action-bump-composer-version.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corsi-it/gh-action-bump-composer-version/issues"
+  },
+  "homepage": "https://github.com/corsi-it/gh-action-bump-composer-version#readme",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "execa": "^5.1.1",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^2.6.1",
+    "prettier": "^2.3.0",
+    "standard": "^14.3.3",
+    "tiny-glob": "^0.2.9"
+  }
+}
