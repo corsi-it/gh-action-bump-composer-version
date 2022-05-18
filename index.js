@@ -165,7 +165,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     console.log('current:', current, '/', 'version:', version);
     // let newVersion = execSync(`npm version --git-tag-version=false ${version}`).toString().trim().replace(/^v/, '');
     let newVersion = getNextVersion(current, version);
-    await runInWorkspace('composer', ['config', 'version', newVersion]);
+    writeVersionToFile(newVersion, pkg, path)
     newVersion = `${tagPrefix}${newVersion}`;
     if (process.env['INPUT_SKIP-COMMIT'] !== 'true') {
       await runInWorkspace('git', ['commit', '-a', '-m', commitMessage.replace(/{{version}}/g, newVersion)]);
@@ -181,7 +181,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     console.log('current:', current, '/', 'version:', version);
     // newVersion = execSync(`npm version --git-tag-version=false ${version}`).toString().trim().replace(/^v/, '');
     newVersion = getNextVersion(current, version);
-    await runInWorkspace('composer', ['config', 'version', newVersion]);
+    writeVersionToFile(newVersion, pkg, path)
     newVersion = `${tagPrefix}${newVersion}`;
     console.log(`::set-output name=newTag::${newVersion}`);
     try {
@@ -220,6 +220,11 @@ function getComposerJson() {
   const pathToComposer = path.join(workspace, 'composer.json');
   if (!existsSync(pathToComposer)) throw new Error("composer.json could not be found in your project's root.");
   return require(pathToComposer);
+}
+
+function writeVersionToFile(version, pkg, path) {
+  pkg.version = version;
+  writeFileSync(path, JSON.stringify(pkg));
 }
 
 function exitSuccess(message) {

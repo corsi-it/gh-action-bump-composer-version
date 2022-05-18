@@ -13,13 +13,11 @@ jobs:
     steps:
       - name: 'Checkout source code'
         uses: 'actions/checkout@v2'
-        with:
-          ref: ${{ github.ref }}
       - name: 'cat composer.json'
         run: cat ./composer.json
       - name: 'Automated Version Bump'
         id: version-bump
-        uses: 'corsi/gh-action-bump-composer-version@master'
+        uses: 'corsi-it/gh-action-bump-composer-version@main'
         with:
           tag-prefix: 'v'
         env:
