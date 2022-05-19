@@ -148,6 +148,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       'user.email',
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`,
     ]);
+    await runInWorkspace('git', ['config', 'pull.rebase', 'false']);
 
     console.log(process.env.GITHUB_REF)
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
