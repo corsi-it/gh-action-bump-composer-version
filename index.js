@@ -205,11 +205,12 @@ const workspace = process.env.GITHUB_WORKSPACE;
       await runInWorkspace('git', ['pull', remoteRepo]);
       await runInWorkspace('git', ['tag', newVersion]);
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
-        await runInWorkspace('git', ['push', remoteRepo, '--follow-tags']);
-        await runInWorkspace('git', ['push', remoteRepo, '--tags']);
+        await runInWorkspace('git', ['push', remoteRepo, '-f', '--follow-tags']);
+        await runInWorkspace('git', ['push', remoteRepo, '-f', '--tags']);
       }
     } else {
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
+        await runInWorkspace('git', ['pull', remoteRepo]);
         await runInWorkspace('git', ['push', remoteRepo]);
       }
     }
