@@ -250,7 +250,7 @@ function logError(error) {
 }
 
 function runInWorkspace(command, args) {
-  console.log(command, args);
+  console.log(command, args.flatMap(x => x.split('')));
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd: workspace });
     let isDone = false;
