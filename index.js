@@ -203,18 +203,14 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
-      console.log('pull+tag');
       await runInWorkspace('git', ['pull', remoteRepo, '--allow-unrelated-histories']);
       await runInWorkspace('git', ['tag', newVersion]);
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
-        console.log('push');
         await runInWorkspace('git', ['push', remoteRepo, '-f', '--follow-tags']);
         await runInWorkspace('git', ['push', remoteRepo, '-f', '--tags']);
       }
     } else {
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
-        console.log('skipped tag');
-        console.log('pull+push');
         await runInWorkspace('git', ['pull', remoteRepo, '--allow-unrelated-histories']);
         await runInWorkspace('git', ['push', remoteRepo]);
       }
@@ -254,6 +250,7 @@ function logError(error) {
 }
 
 function runInWorkspace(command, args) {
+  console.log(command, args);
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd: workspace });
     let isDone = false;
