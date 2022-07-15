@@ -198,11 +198,12 @@ const workspace = process.env.GITHUB_WORKSPACE;
         'git commit failed because you are using "actions/checkout@v2"; ' +
           'but that doesnt matter because you dont need that git commit, thats only for "actions/checkout@v1"',
       );
+      console.warn(e);
     }
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
-      await runInWorkspace('git', ['pull', remoteRepo]);
+      await runInWorkspace('git', ['pull', remoteRepo, '--allow-unrelated-histories']);
       await runInWorkspace('git', ['tag', newVersion]);
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
         await runInWorkspace('git', ['push', remoteRepo, '-f', '--follow-tags']);
@@ -210,7 +211,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       }
     } else {
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
-        await runInWorkspace('git', ['pull', remoteRepo]);
+        await runInWorkspace('git', ['pull', remoteRepo, '--allow-unrelated-histories']);
         await runInWorkspace('git', ['push', remoteRepo]);
       }
     }
