@@ -212,7 +212,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     } else {
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
         // await runInWorkspace('git', ['pull', remoteRepo, '--allow-unrelated-histories']);
-        await runInWorkspace('git', ['push', remoteRepo]);
+        await runInWorkspace('git', ['push', remoteRepo, '-f']);
       }
     }
   } catch (e) {
